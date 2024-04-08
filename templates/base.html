@@ -2,359 +2,455 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<style>
-
-  body {
-  font: 95% Arial, Helvetica, sans-serif; 
-  color: #BBBBBF;  /* Default text color */
-  background-color: #404040;
-  margin: 0;
-  padding:0;
-
-}
-.wrapper{
-  height: 100vh;
-  /* width: 100vw; */
-}
-
-.container {
-  display: flex;
-  width: 100%;
-  height: 90%;
-}
-
-.chat-interface,
-.contacts-list {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.chat-interface {
-  flex: 3;
-  background-color: background-color; /* Adjust if needed, maybe a lighter shade of gray */
-}
-
-.contacts-list {
-  flex: 1;
-  background-color: #8D8E8E; /* Adjust if needed, maybe a darker shade of gray */
-}
-
-/* Navigation Styles */
-#nav {
-  height: 10%;
-  list-style-type: none;
-  margin: 0; 
-  padding: 0;
-  overflow: hidden;
-  background-color: #475B5A; /* Same as background */
-}
-
-.li {
-  float: left;
-  height: 100%;
-
-}
-
-.li a {
-  height: 100%;
-  padding: 0 20px 0 20px;
-  display: flex;
-  justify-content: center;
-  align-items:center;
-  color: #BBBBBF;
-  font-size: 20px;
-  font-weight: bold;
-  text-decoration: none;
-  animation-timing-function: ease-in-out;
-  transition-duration: 200mms;
-}
-
-.li a:hover {
-  background-color:#404040;
-  color: #52D1DC; /* Accent color on hover */
-  font-weight: bold;
-
-}
-
-/* Form Styles */
-.form-style {
-  max-width: 400px;
-  margin: 10px auto;
-  padding: 16px;
-}
-
-.form-style h1, 
-.form-style a,
-.td { 
-  color: #A3A9AA;  /* Primary color 2 */
-  font-weight: bold;
-  font-family: "Times New Roman";
-}
-
-.form-input { 
-  border: 1px solid #8D8E8E; /* Secondary color for borders */
-  padding: 4px;
-  margin-bottom: 4%;
-  font: inherit; 
-}
-
-.mytext { 
-  border-right: none;  
-  width: 300px; 
-}
-
-.submit {
-  width: 160px;
-  font-size: 24px;
-  background-color: #52D1DC; /* Accent color */
-  color: #475B5A; /* Background color for text */
-}
-
-.submit:hover {
-  background-color: #8D8E8E; /* Secondary  color */ 
-}
-
-/* Other Styles */
-.webcam-container { 
-  border: 2px solid #666; /* Slightly darker than background */
-  border-radius: 5px;
-  background-color: #f1f1f1; 
-  padding: 5px; 
-}
-
-.text-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 0px;
-  padding-bottom: 10px;
-  width: 95%; 
-}
-
-.form-style button{
-
-  width: 89%;
-	height:70%;
-	padding: 5%;
-	background: #feda6a;
-	border-bottom: 2px solid #393f4d;;
-	border-top-style: none;
-	border-right-style: none;
-	border-left-style: none;
-	color: #393f4d;
-  font-weight: bold;
-  font-size: 28px;
-  font-family: "Times New Roman";
-}
-
-.form-style button:hover {
-  background-color: #393f4d;
-  color: #feda6a;
-  font-weight: bold;
-}
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 50;
-  overflow-x: hidden;
-  padding-top: 20px;
-
-}
-
-.left {
-  left: 15;
-  border-right: 0px #feda6a solid;
-}
-
-.right {
-  right: 0;
-  border-left: 1px #feda6a solid;
-}
-
-.mytext {
-    border:1px solid #393f4d;
-    border-right:none;
-    padding:4px;
-    margin:0px;
-    float:left;
-    height:32px;
-    overflow:hidden;
-    line-height:16px;
-    width: 300px;
-  }
-
-  .mic {
-      border:1px solid #393f4d;
-      background:#feda6a;
-      vertical-align:top;
+  <style>
+    .contacts-list{
+      height:90vh;
+      position: relative;
+    }
+    .contacts-list-cunt{
+      background-color: #A3A9AA;
+      overflow-y: scroll;
+      height:100vh;
+      width: 100%;
+    }
+    .contacts-list ul {
       padding:0px;
-      margin:0;
-      float:left;
-      height:42px;
-      overflow:hidden;
-      width:5em;
-      text-align:center;
-      line-height:16px;
-  }
-  
+      width:100%;
+      display: flex;
+      flex-direction: column;
+      /* Allow placing SVG and content side by side */
+      align-items: center;
+    }
+    .contacts-list li {
+      background-color: #475b5a;
+      margin: 2px 0px 2px 0px ;
+      width:100%;
+      display: flex;
+      /* Allow placing SVG and content side by side */
+      align-items: center;
+    }
 
-.submit {
-    border:1px solid #393f4d;
-    height: 42px;
-    width: 160px;
-    text-align: center;
-    background-color: #feda6a;
-    color: #393f4d;
-    font-weight: bold;
-    font-size: 24px;
-    font-family: "Times New Roman";
-    vertical-align:top;
-}
-.submit:hover {
-  background-color: #393f4d;
-  color: #feda6a;
-  font-weight: bold;
-}
-.td {
-  color: #feda6a;
-  font-weight: bold;
-  font-size: 20px;
-}
+    .contacts-list li svg {
+      margin-right: 10px;
+      margin-left: 10px;
+      height: 50px;
+      /* Space between SVG and text */
+    }
 
-.form-style{
-	font: 95% Arial, Helvetica, sans-serif;
-	max-width: 400px;
-	margin: 10px auto;
-	padding: 16px;
+    .conversation-number {
+      margin-left: auto;
+      /* Push number to the right */
+      padding: 2px 5px;
+      background-color: #404040;
+      border-radius: 10px;
+    }
 
-}
-.form-style h1, .form-style a{
-	padding: 20px 0;
-  font-size: 24px;
-	font-weight: bold;
-  font-family: "Times New Roman";
-	text-align: center;
-	margin: -16px -16px 16px -16px;
-  color:#feda6a
-}
-.form-style input[type="text"],
-.form-style input[type="password"],
-.form-style input[type="date"],
-.form-style input[type="datetime"],
-.form-style input[type="email"],
-.form-style input[type="number"],
-.form-style input[type="search"],
-.form-style input[type="time"],
-.form-style input[type="url"],
-.form-style textarea,
-.form-style select
-{
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	outline: none;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	width: 100%;
-	background: #fff;
-	margin-bottom: 4%;
-	border: 1px solid #ccc;
-	padding: 3%;
-	color:#0000a0 ;
-	font: 95% Arial, Helvetica, sans-serif;
-}
-.form-style input[type="text"]:focus,
-.form-style input[type="password"]:focus,
-.form-style input[type="date"]:focus,
-.form-style input[type="datetime"]:focus,
-.form-style input[type="email"]:focus,
-.form-style input[type="number"]:focus,
-.form-style input[type="search"]:focus,
-.form-style input[type="time"]:focus,
-.form-style input[type="url"]:focus,
-.form-style textarea:focus,
-.form-style select:focus
-{
-	box-shadow: 0 0 5px #0000a0;
-	padding: 3%;
-	border: 1px solid #0000a0;
-}
+    body {
+      font: 95% Arial, Helvetica, sans-serif;
+      color: #BBBBBF;
+      /* Default text color */
+      background-color: #404040;
+      margin: 0;
+      padding: 0;
 
-.site-form span,label{
-  color: #feda6a;
-}
-.errorlist{
-    color: red;
-    font-weight: bold;
-}
-#webcamFeed {
-    border: 2px solid #333;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-  .draggable {
-    z-index: 10;
-    position: absolute;
-    cursor: move;
-    border: 2px solid #333;
-    border-radius: 5px;
-    background-color: #475b5a;
-    padding: 5px;
-}
+    }
 
-/* Style the close button (optional) */
-.draggable button {
-    float: right;
-}
+    .add-chat-container {
+      scale: 2;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      padding: 0px;
+      margin: 10px 45px 40px 10px;
+    }
 
-.text-bar form {
-    width: 100%;
-}
-.text-bar input[type="text"] {
-    width: 80%; /* Set a specific width for the text input */
-    background-color: #475b5a;
-    border: #BBBBBF;
-}
-.text-bar input[type="submit"] {
-    width: 14%; /* Set a specific width for the text input */
-}
-.text-bar button {
-    width: 5%; /* Set a specific width for the text input */
-}
+    .add-chat-button {
+      background-color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 24px;
+      text-align: center;
+      line-height: 24px;
+      cursor: pointer;
+      /* Indicate clickable behavior */
+    }
 
-</style>
-<title>Homepage</title>
+    .add-chat-button:hover {
+      background-color: #f5f5f5;
+      /* Slightly lighter on hover (optional) */
+    }
+
+    .wrapper {
+      height: 100vh;
+      /* width: 100vw; */
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 90%;
+    }
+
+    .chat-interface,
+    .contacts-list {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .chat-interface {
+      flex: 3;
+      background-color: background-color;
+      /* Adjust if needed, maybe a lighter shade of gray */
+    }
+
+    .contacts-list {
+      flex: 1;
+      background-color: #8D8E8E;
+      /* Adjust if needed, maybe a darker shade of gray */
+    }
+
+    /* Navigation Styles */
+    #nav {
+      height: 10%;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #475B5A;
+      /* Same as background */
+    }
+
+    .li {
+      float: left;
+      height: 100%;
+
+    }
+
+    .li a {
+      height: 100%;
+      padding: 0 20px 0 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #BBBBBF;
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      animation-timing-function: ease-in-out;
+      transition-duration: 200mms;
+    }
+
+    .li a:hover {
+      background-color: #404040;
+      color: #52D1DC;
+      /* Accent color on hover */
+      font-weight: bold;
+
+    }
+
+    /* Form Styles */
+    .form-style {
+      max-width: 400px;
+      margin: 10px auto;
+      padding: 16px;
+    }
+
+    .form-style h1,
+    .form-style a,
+    .td {
+      color: #A3A9AA;
+      /* Primary color 2 */
+      font-weight: bold;
+      font-family: "Times New Roman";
+    }
+
+    .form-input {
+      border: 1px solid #8D8E8E;
+      /* Secondary color for borders */
+      padding: 4px;
+      margin-bottom: 4%;
+      font: inherit;
+    }
+
+    .mytext {
+      border-right: none;
+      width: 300px;
+    }
+
+    .submit {
+      width: 160px;
+      font-size: 24px;
+      background-color: #52D1DC;
+      /* Accent color */
+      color: #475B5A;
+      /* Background color for text */
+    }
+
+    .submit:hover {
+      background-color: #8D8E8E;
+      /* Secondary  color */
+    }
+
+    /* Other Styles */
+    .webcam-container {
+      border: 2px solid #666;
+      /* Slightly darker than background */
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      padding: 5px;
+    }
+
+    .text-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0px;
+      padding-bottom: 10px;
+      width: 95%;
+    }
+
+    .form-style button {
+
+      width: 89%;
+      height: 70%;
+      padding: 5%;
+      background: #feda6a;
+      border-bottom: 2px solid #393f4d;
+      ;
+      border-top-style: none;
+      border-right-style: none;
+      border-left-style: none;
+      color: #393f4d;
+      font-weight: bold;
+      font-size: 28px;
+      font-family: "Times New Roman";
+    }
+
+    .form-style button:hover {
+      background-color: #393f4d;
+      color: #feda6a;
+      font-weight: bold;
+    }
+
+    .split {
+      height: 100%;
+      width: 50%;
+      position: fixed;
+      z-index: 1;
+      top: 50;
+      overflow-x: hidden;
+      padding-top: 20px;
+
+    }
+
+    .left {
+      left: 15;
+      border-right: 0px #feda6a solid;
+    }
+
+    .right {
+      right: 0;
+      border-left: 1px #feda6a solid;
+    }
+
+    .mytext {
+      border: 1px solid #393f4d;
+      border-right: none;
+      padding: 4px;
+      margin: 0px;
+      float: left;
+      height: 32px;
+      overflow: hidden;
+      line-height: 16px;
+      width: 300px;
+    }
+
+    .mic {
+      border: 1px solid #393f4d;
+      background: #feda6a;
+      vertical-align: top;
+      padding: 0px;
+      margin: 0;
+      float: left;
+      height: 42px;
+      overflow: hidden;
+      width: 5em;
+      text-align: center;
+      line-height: 16px;
+    }
+
+
+    .submit {
+      border: 1px solid #393f4d;
+      height: 42px;
+      width: 160px;
+      text-align: center;
+      background-color: #feda6a;
+      color: #393f4d;
+      font-weight: bold;
+      font-size: 24px;
+      font-family: "Times New Roman";
+      vertical-align: top;
+    }
+
+    .submit:hover {
+      background-color: #393f4d;
+      color: #feda6a;
+      font-weight: bold;
+    }
+
+    .td {
+      color: #feda6a;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .form-style {
+      font: 95% Arial, Helvetica, sans-serif;
+      max-width: 400px;
+      margin: 10px auto;
+      padding: 16px;
+
+    }
+
+    .form-style h1,
+    .form-style a {
+      padding: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+      font-family: "Times New Roman";
+      text-align: center;
+      margin: -16px -16px 16px -16px;
+      color: #feda6a
+    }
+
+    .form-style input[type="text"],
+    .form-style input[type="password"],
+    .form-style input[type="date"],
+    .form-style input[type="datetime"],
+    .form-style input[type="email"],
+    .form-style input[type="number"],
+    .form-style input[type="search"],
+    .form-style input[type="time"],
+    .form-style input[type="url"],
+    .form-style textarea,
+    .form-style select {
+      -webkit-transition: all 0.30s ease-in-out;
+      -moz-transition: all 0.30s ease-in-out;
+      -ms-transition: all 0.30s ease-in-out;
+      -o-transition: all 0.30s ease-in-out;
+      outline: none;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      width: 100%;
+      background: #fff;
+      margin-bottom: 4%;
+      border: 1px solid #ccc;
+      padding: 3%;
+      color: #0000a0;
+      font: 95% Arial, Helvetica, sans-serif;
+    }
+
+    .form-style input[type="text"]:focus,
+    .form-style input[type="password"]:focus,
+    .form-style input[type="date"]:focus,
+    .form-style input[type="datetime"]:focus,
+    .form-style input[type="email"]:focus,
+    .form-style input[type="number"]:focus,
+    .form-style input[type="search"]:focus,
+    .form-style input[type="time"]:focus,
+    .form-style input[type="url"]:focus,
+    .form-style textarea:focus,
+    .form-style select:focus {
+      box-shadow: 0 0 5px #0000a0;
+      padding: 3%;
+      border: 1px solid #0000a0;
+    }
+
+    .site-form span,
+    label {
+      color: #feda6a;
+    }
+
+    .errorlist {
+      color: red;
+      font-weight: bold;
+    }
+
+    #webcamFeed {
+      border: 2px solid #333;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .draggable {
+      z-index: 10;
+      position: absolute;
+      cursor: move;
+      border: 2px solid #333;
+      border-radius: 5px;
+      background-color: #475b5a;
+      padding: 5px;
+    }
+
+    /* Style the close button (optional) */
+    .draggable button {
+      float: right;
+    }
+
+    .text-bar form {
+      width: 100%;
+    }
+
+    .text-bar input[type="text"] {
+      width: 80%;
+      /* Set a specific width for the text input */
+      background-color: #475b5a;
+      border: #BBBBBF;
+    }
+
+    .text-bar input[type="submit"] {
+      width: 14%;
+      /* Set a specific width for the text input */
+    }
+
+    .text-bar button {
+      width: 5%;
+      /* Set a specific width for the text input */
+    }
+  </style>
+  <title>Homepage</title>
 </head>
+
 <body>
-  
-  <div class="wrapper" >
-  <ul id="nav">
-    <li class="li"><a class="active" href="{% url 'home' %}">Home</a></li>
-    <li class="li"><a href="{% url 'animation' %}">Convertor</a></li>
-    {% if not user.is_authenticated %}
-    <li class="li"><a href="{% url 'signup' %}">Sign Up</a></li>
-    {% endif %}
-    {% if user.is_authenticated %}
-    <li class="li"><a href="{% url 'logout' %}">Log-Out</a></li>
-    {% else %}
+
+  <div class="wrapper">
+    <ul id="nav">
+      <li class="li"><a class="active" href="{% url 'home' %}">Home</a></li>
+      <li class="li"><a href="{% url 'animation' %}">Convertor</a></li>
+      {% if not user.is_authenticated %}
+      <li class="li"><a href="{% url 'signup' %}">Sign Up</a></li>
+      {% endif %}
+      {% if user.is_authenticated %}
+      <li class="li"><a href="{% url 'logout' %}">Log-Out</a></li>
+      {% else %}
       <li class="li"><a href="{% url 'login' %}">Log-in</a></li>
-    {% endif %}
-    <li class="li"><a href="{% url 'contact' %}">Contact</a></li>
-    <li class="li"><a href="{% url 'about' %}">About</a></li>
-  </ul>
-  {% block content %}
-  {% endblock %}
-</div>
+      {% endif %}
+      <li class="li"><a href="{% url 'contact' %}">Contact</a></li>
+      <li class="li"><a href="{% url 'about' %}">About</a></li>
+    </ul>
+    {% block content %}
+    {% endblock %}
+  </div>
 
 
 </body>
+
 </html>

@@ -3,7 +3,7 @@
 
 
 {% block content %}
-<div class="container"> 
+<div class="container">
 	<div id="webcamContainer" class="draggable">
 		<h2 align="center">Webcam Feed</h2>
 		<video id="webcamFeed" width="400" height="300" autoplay></video>
@@ -11,54 +11,83 @@
 		<button onclick="startWebcam()">Start Webcam</button>
 		<button onclick="stopWebcam()">Stop Webcam</button>
 	</div>
-	<div class="contacts-list">
-	  </div> 
-	<div class="chat-interface"> 
-	<div class="text-bar">
-	  <br>
-			  <form class="" action="" method="post" align="left">
-			  {% csrf_token %}
-						  <input type="text" name="sen" class="mytext" id="speechToText" placeholder="">
-						  <button type="button" name="button" class="mic" onclick="record()"><img src="{% static 'mic3.png' %}" height="32px" width="38px" /></button>
-											  <input type="submit" name="submit" class="submit">
-		</form>
-	  </div>
-	</div> 
-  </div>
+		<div class="contacts-list">
+			<div class="contacts-list-cunt" >
+
+				<ul>
+				</ul>
+				<div class="add-chat-container">
+					<button class="add-chat-button">+</button>
+				</div>
+			</div>
+		</div>
+		
+	<div class="chat-interface">
+		<div class="text-bar">
+			<br>
+			<form class="" action="" method="post" align="left">
+				{% csrf_token %}
+				<input type="text" name="sen" class="mytext" id="speechToText" placeholder="">
+				<button type="button" name="button" class="mic" onclick="record()"><img src="{% static 'mic3.png' %}"
+						height="32px" width="38px" /></button>
+				<input type="submit" name="submit" class="submit">
+			</form>
+		</div>
+	</div>
+</div>
 
 
 <script>
-	//webkitSpeechRecognition api for speech to text conversion
-	function record(){
-		var recognition = new webkitSpeechRecognition();
-		recognition.lang='en-IN';
+	const addChatButton = document.querySelector('.add-chat-button');
+        const chatList = document.querySelector('.contacts-list ul');
+        let conversationNumber = 1;
 
-		recognition.onresult = function(event){
+        addChatButton.addEventListener('click', addConversationItem); // Attach event listener
+
+        function addConversationItem() {
+            const newChat = document.createElement('li');
+
+            const svgIcon = `
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+            </svg> `;
+
+            const numberSpan = document.createElement('span');
+            numberSpan.textContent = `Conversation ${conversationNumber}`;
+
+            newChat.innerHTML = svgIcon + numberSpan.outerHTML; // Include the span within the li
+            chatList.appendChild(newChat);
+
+            conversationNumber++;
+        }
+	//webkitSpeechRecognition api for speech to text conversion
+	function record() {
+		var recognition = new webkitSpeechRecognition();
+		recognition.lang = 'en-IN';
+
+		recognition.onresult = function (event) {
 			console.log(event)
 			document.getElementById('speechToText').value = event.results[0][0].transcript;
 		}
 		recognition.start();
-	 }
-	function play()
-	{
+	}
+	function play() {
 		var videoSource = new Array();
-		var	videos = document.getElementById("list").getElementsByTagName("li");
+		var videos = document.getElementById("list").getElementsByTagName("li");
 		var j;
-		for(j=0;j<videos.length;j++)
-		{
-			videoSource[j] = "/static/" + videos[j].innerHTML +".mp4";
+		for (j = 0; j < videos.length; j++) {
+			videoSource[j] = "/static/" + videos[j].innerHTML + ".mp4";
 		}
 
 		var i = 0; // define i
 		var videoCount = videoSource.length;
 
-		function videoPlay(videoNum)
-		{
+		function videoPlay(videoNum) {
 			document.getElementById("list").getElementsByTagName("li")[videoNum].style.color = "#09edc7";
 			document.getElementById("list").getElementsByTagName("li")[videoNum].style.fontSize = "xx-large";
 			document.getElementById("videoPlayer").setAttribute("src", videoSource[videoNum]);
-	    	document.getElementById("videoPlayer").load();
-	    	document.getElementById("videoPlayer").play();
+			document.getElementById("videoPlayer").load();
+			document.getElementById("videoPlayer").play();
 
 		}
 		document.getElementById('videoPlayer').addEventListener('ended', myHandler, false);
@@ -67,52 +96,51 @@
 
 		videoPlay(0); // play the video
 
-		function myHandler()
-		{
-	 		document.getElementById("list").getElementsByTagName("li")[i].style.color = "#feda6a";
+		function myHandler() {
+			document.getElementById("list").getElementsByTagName("li")[i].style.color = "#feda6a";
 			document.getElementById("list").getElementsByTagName("li")[i].style.fontSize = "20px";
 			i++;
-	    	if (i == videoCount)
-	    	{
-	       	    document.getElementById("videoPlayer").pause();
-	    	}
-	     	else
-	     	{
-	        	videoPlay(i);
-	    	}
+			if (i == videoCount) {
+				document.getElementById("videoPlayer").pause();
+			}
+			else {
+				videoPlay(i);
+			}
 		}
 	}
 	/* LETS USE ONLY PLAY PAUSE BUTTON WITH 720 *420 ,IT FITS THE SCREEN
 	function makeBig() {
-	    document.getElementById("videoPlayer").width = 560;
+		document.getElementById("videoPlayer").width = 560;
 		document.getElementById("videoPlayer").height = 360;
 	}
 
 	function makeSmall() {
-	    document.getElementById("videoPlayer").width = 320;
+		document.getElementById("videoPlayer").width = 320;
 		document.getElementById("videoPlayer").height = 180;
 	}
 
 	function makeNormal() {
-	    document.getElementById("videoPlayer").width = 420;
+		document.getElementById("videoPlayer").width = 420;
 		document.getElementById("videoPlayer").height =280;
 	}*/
-	function playPause(){
-  		if (document.getElementById("videoPlayer").paused){
-    		play();}
-  		else{
-    		document.getElementById("videoPlayer").pause();}
+	function playPause() {
+		if (document.getElementById("videoPlayer").paused) {
+			play();
 		}
+		else {
+			document.getElementById("videoPlayer").pause();
+		}
+	}
 
 	function startWebcam() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function (stream) {
-            document.getElementById('webcamFeed').srcObject = stream;
-        })
-        .catch(function (error) {
-            console.error('Error accessing webcam:', error);
-        });
-}
+		navigator.mediaDevices.getUserMedia({ video: true })
+			.then(function (stream) {
+				document.getElementById('webcamFeed').srcObject = stream;
+			})
+			.catch(function (error) {
+				console.error('Error accessing webcam:', error);
+			});
+	}
 
 	function stopWebcam() {
 		var webcamFeed = document.getElementById('webcamFeed');
@@ -126,91 +154,91 @@
 		}
 	}
 
-// Add this section to your existing JavaScript code
-dragElement(document.getElementById("webcamContainer"));
+	// Add this section to your existing JavaScript code
+	dragElement(document.getElementById("webcamContainer"));
 
-function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    var isSnapping = false; // Flag to track whether snapping is active
+	function dragElement(elmnt) {
+		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+		var isSnapping = false; // Flag to track whether snapping is active
 
-    if (document.getElementById(elmnt.id + "-header")) {
-        // if present, the header is where you move the DIV from:
-        document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
-    } else {
-        // otherwise, move the DIV from anywhere inside the DIV:
-        elmnt.onmousedown = dragMouseDown;
-    }
+		if (document.getElementById(elmnt.id + "-header")) {
+			// if present, the header is where you move the DIV from:
+			document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
+		} else {
+			// otherwise, move the DIV from anywhere inside the DIV:
+			elmnt.onmousedown = dragMouseDown;
+		}
 
-    function dragMouseDown(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
-        document.onmousemove = elementDrag;
-    }
+		function dragMouseDown(e) {
+			e = e || window.event;
+			e.preventDefault();
+			// get the mouse cursor position at startup:
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+			document.onmouseup = closeDragElement;
+			// call a function whenever the cursor moves:
+			document.onmousemove = elementDrag;
+		}
 
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+		function elementDrag(e) {
+			e = e || window.event;
+			e.preventDefault();
+			// calculate the new cursor position:
+			pos1 = pos3 - e.clientX;
+			pos2 = pos4 - e.clientY;
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+			// set the element's new position:
+			elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
 
-        isSnapping = false; // Disable snapping during drag
-    }
+			isSnapping = false; // Disable snapping during drag
+		}
 
-    function closeDragElement() {
-        // stop moving when mouse button is released:
-        document.onmouseup = null;
-        document.onmousemove = null;
+		function closeDragElement() {
+			// stop moving when mouse button is released:
+			document.onmouseup = null;
+			document.onmousemove = null;
 
-        // Enable snapping after "mouseup"
-        isSnapping = true;
-        snapToEdges(elmnt);
-    }
+			// Enable snapping after "mouseup"
+			isSnapping = true;
+			snapToEdges(elmnt);
+		}
 
-    function snapToEdges(elmnt) {
-        if (!isSnapping) {
-            return;
-        }
+		function snapToEdges(elmnt) {
+			if (!isSnapping) {
+				return;
+			}
 
-        var threshold = 20; // Set the threshold for snapping
+			var threshold = 20; // Set the threshold for snapping
 
-        var screenWidth = window.innerWidth;
-        var screenHeight = window.innerHeight;
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
 
-        // Snap to the left edge
-        if (elmnt.offsetLeft < threshold) {
-            elmnt.style.left = "0px";
-        }
+			// Snap to the left edge
+			if (elmnt.offsetLeft < threshold) {
+				elmnt.style.left = "0px";
+			}
 
-        // Snap to the right edge
-        if (screenWidth - elmnt.offsetLeft - elmnt.offsetWidth < threshold) {
-            elmnt.style.left = screenWidth - elmnt.offsetWidth + "px";
-        }
+			// Snap to the right edge
+			if (screenWidth - elmnt.offsetLeft - elmnt.offsetWidth < threshold) {
+				elmnt.style.left = screenWidth - elmnt.offsetWidth + "px";
+			}
 
-        // Snap to the top edge
-        if (elmnt.offsetTop < threshold) {
-            elmnt.style.top = "0px";
-        }
+			// Snap to the top edge
+			if (elmnt.offsetTop < threshold) {
+				elmnt.style.top = "0px";
+			}
 
-        // Snap to the bottom edge
-        if (screenHeight - elmnt.offsetTop - elmnt.offsetHeight < threshold) {
-            elmnt.style.top = screenHeight - elmnt.offsetHeight + "px";
-        }
-    }
-}
+			// Snap to the bottom edge
+			if (screenHeight - elmnt.offsetTop - elmnt.offsetHeight < threshold) {
+				elmnt.style.top = screenHeight - elmnt.offsetHeight + "px";
+			}
+		}
+	}
 
 
-	</script>
+</script>
 
 
 {% endblock %}
