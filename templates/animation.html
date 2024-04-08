@@ -3,58 +3,28 @@
 
 
 {% block content %}
-<div id="webcamContainer" class="draggable">
-	<h2 align="center">Webcam Feed</h2>
-	<video id="webcamFeed" width="400" height="300" autoplay></video>
-	<br>
-	<button onclick="startWebcam()">Start Webcam</button>
-	<button onclick="stopWebcam()">Stop Webcam</button>
-</div>
-<div class="text-bar"> 
-	<br>
-		<form class="" action="" method="post" align="left">
-		{% csrf_token %}
-					<input type="text" name="sen" class="mytext" id="speechToText" placeholder="">
-					<button type="button" name="button" class="mic" onclick="record()"><img src="{% static 'mic3.png' %}" height="32px" width="38px" /></button>
-		  			<!-- &nbsp&nbsp&nbsp&nbsp -->
-		  			<input type="submit" name="submit" class="submit">
-
+<div class="container"> 
+	<div id="webcamContainer" class="draggable">
+		<h2 align="center">Webcam Feed</h2>
+		<video id="webcamFeed" width="400" height="300" autoplay></video>
+		<br>
+		<button onclick="startWebcam()">Start Webcam</button>
+		<button onclick="stopWebcam()">Stop Webcam</button>
+	</div>
+	<div class="contacts-list">
+	  </div> 
+	<div class="chat-interface"> 
+	<div class="text-bar">
+	  <br>
+			  <form class="" action="" method="post" align="left">
+			  {% csrf_token %}
+						  <input type="text" name="sen" class="mytext" id="speechToText" placeholder="">
+						  <button type="button" name="button" class="mic" onclick="record()"><img src="{% static 'mic3.png' %}" height="32px" width="38px" /></button>
+											  <input type="submit" name="submit" class="submit">
 		</form>
-		<!-- <br>
-		<table cellspacing="20px">
-			<tr>
-				<td class="td">The text that you entered is:</td>
-				<td class="td">{{ text }}</td>
-			</tr>
-			<tr>
-				<td class="td">Key words in sentence:</td>
-				<td class="td">
-				<ul class="td" id="list" align="center">
-  					{% for word in words %}
-    				<li id="{{ i }}" style="margin-right: 8px">{{ word }}</li>
-  					{% endfor %}
-				</ul>
-			</td>
-		</tr>
-	</table> -->
-</div>
-  <div class="split right">
-  <h2 align="center">Sign Language Animation</h2>
-
-	<div style="text-align:center">	&nbsp&nbsp
-  	<button class="submit" onclick="playPause()">Play/Pause</button>
-  	<!--  LETS USE ONLY PLAY PAUSE BUTTON WITH 720 *420 ,IT FITS THE SCREEN ASHISH
-
-  	<button onclick="makeBig()">Big</button>
-  	<button onclick="makeSmall()">Small</button>
-  	<button onclick="makeNormal()">Normal</button>-->
-
-
-  	<video id="videoPlayer" width="600" height="350"  preload="auto" autoplay>
-    	<source src="" type="video/mp4">
-    Your browser does not support HTML5 video.
-  	</video>
-  	</div></div>
+	  </div>
+	</div> 
+  </div>
 
 
 <script>
