@@ -5,28 +5,43 @@
 
 <head>
   <style>
-    .contacts-list{
-      height:90vh;
+    #webcam{
+      transform: rotateY(180deg);
+    }
+    #outputCanvas {
+      width: 400px;
+      z-index: 1;
+      transform: rotateY(180deg);
+      left: 6px;
+      top: 80px;
+      position: absolute;
+    }
+
+    .contacts-list {
+      height: 90vh;
       position: relative;
     }
-    .contacts-list-cunt{
+
+    .contacts-list-cunt {
       background-color: #A3A9AA;
       overflow-y: scroll;
-      height:100vh;
+      height: 100vh;
       width: 100%;
     }
+
     .contacts-list ul {
-      padding:0px;
-      width:100%;
+      padding: 0px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       /* Allow placing SVG and content side by side */
       align-items: center;
     }
+
     .contacts-list li {
       background-color: #475b5a;
-      margin: 2px 0px 2px 0px ;
-      width:100%;
+      margin: 2px 0px 2px 0px;
+      width: 100%;
       display: flex;
       /* Allow placing SVG and content side by side */
       align-items: center;
@@ -452,5 +467,6 @@
 
 
 </body>
+
 
 </html>

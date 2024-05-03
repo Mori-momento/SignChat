@@ -6,10 +6,11 @@
 <div class="container">
 	<div id="webcamContainer" class="draggable">
 		<h2 align="center">Webcam Feed</h2>
-		<video id="webcamFeed" width="400" height="300" autoplay></video>
+		<video id="webcam" width="400" height="300" autoplay playsinline></video>
+		<canvas id="outputCanvas"></canvas>
 		<br>
-		<button onclick="startWebcam()">Start Webcam</button>
-		<button onclick="stopWebcam()">Stop Webcam</button>
+		<button id="webcamButton">Start Webcam</button>
+		<button id="stopWebcam">Stop Webcam</button>
 	</div>
 		<div class="contacts-list">
 			<div class="contacts-list-cunt" >
@@ -35,6 +36,15 @@
 		</div>
 	</div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3/drawing_utils.js" crossorigin="anonymous"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/hands.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0/hands.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.min.js"></script>
+<!-- <script src="{% static 'js/hand_detection.js' %}"></script>  -->
+<script type="module" src="{% static 'js/hand_detection.js' %}"></script>
 
 
 <script>
@@ -132,27 +142,7 @@
 		}
 	}
 
-	function startWebcam() {
-		navigator.mediaDevices.getUserMedia({ video: true })
-			.then(function (stream) {
-				document.getElementById('webcamFeed').srcObject = stream;
-			})
-			.catch(function (error) {
-				console.error('Error accessing webcam:', error);
-			});
-	}
 
-	function stopWebcam() {
-		var webcamFeed = document.getElementById('webcamFeed');
-		var stream = webcamFeed.srcObject;
-		if (stream) {
-			var tracks = stream.getTracks();
-			tracks.forEach(function (track) {
-				track.stop();
-			});
-			webcamFeed.srcObject = null;
-		}
-	}
 
 	// Add this section to your existing JavaScript code
 	dragElement(document.getElementById("webcamContainer"));
